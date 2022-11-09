@@ -1,88 +1,127 @@
 {
-  "name": "storybook-addon-context-decorators",
-  "version": "0.0.0",
-  "description": "Build custom decorators to represent different contexts for stories",
-  "keywords": [
-    "storybook-addons        "addon"", ""brand"", ""contexts"", ""css"", ""decorators"", ""design"", ""organize"", ""popular"", ""react"", ""storybook"", ""storybook-addon"", ""theming"", ""tokens"", ""variables"", "storybook-addons"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/castastrophe/storybook-addon-context-decorators"
-  },
-  "author": "castastrophe <castastrophe@users.noreply.github.com>",
-  "license": "MIT",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/ts/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "README.md",
-    "*.js",
-    "*.d.ts"
-  ],
-  "scripts": {
-    "clean": "rimraf ./dist",
-    "buildBabel": "concurrently \"yarn buildBabel:cjs\" \"yarn buildBabel:esm\"",
-    "buildBabel:cjs": "babel ./src -d ./dist/cjs --extensions \".js,.jsx,.ts,.tsx\"",
-    "buildBabel:esm": "babel ./src -d ./dist/esm --env-name esm --extensions \".js,.jsx,.ts,.tsx\"",
-    "buildTsc": "tsc --declaration --emitDeclarationOnly --outDir ./dist/ts",
-    "prebuild": "yarn clean",
-    "build": "concurrently \"yarn buildBabel\" \"yarn buildTsc\"",
-    "build:watch": "concurrently \"yarn buildBabel:esm -- --watch\" \"yarn buildTsc -- --watch\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
-    "start": "concurrently \"yarn build:watch\" \"yarn storybook -- --no-manager-cache --quiet\"",
-    "build-storybook": "build-storybook",
-    "prerelease": "zx scripts/prepublish-checks.mjs",
-    "release": "yarn build && auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.mjs"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.5",
-    "@babel/preset-typescript": "^7.13.0",
-    "@storybook/addon-essentials": "^6.5.8",
-    "@storybook/react": "^6.5.8",
-    "auto": "^10.3.0",
-    "babel-loader": "^8.1.0",
-    "boxen": "^5.0.1",
-    "concurrently": "^6.2.0",
-    "dedent": "^0.7.0",
-    "prettier": "^2.3.1",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.2.4",
-    "zx": "^1.14.1"
-  },
-  "peerDependencies": {
-    "@storybook/addons": "^6.5.8",
-    "@storybook/api": "^6.5.8",
-    "@storybook/components": "^6.5.8",
-    "@storybook/core-events": "^6.5.8",
-    "@storybook/theming": "^6.5.8",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
+    "name": "storybook-addon-context-decorators",
+    "version": "1.0.0",
+    "description": "Build custom decorators to represent different contexts for stories",
+    "license": "MIT",
+    "author": "castastrophe <castastrophe@users.noreply.github.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/castastrophe/storybook-addon-context-decorators"
     },
-    "react-dom": {
-      "optional": true
-    }
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "storybook": {
-    "displayName": "Custom contexts",
-    "supportedFrameworks": [
-      "react", "vue", "angular", "web-components", "ember", "html", "svelte", "preact", "react-native"
+    "bugs": {
+        "url": "https://github.com/castastrophe/storybook-addon-context-decorators/issues"
+    },
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "files": [
+        "*.d.ts",
+        "*.js",
+        "dist/**/*"
     ],
-    "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
-  }
+    "scripts": {
+        "prebuild": "yarn clean",
+        "build": "run-p build:cjs build:esm",
+        "postbuild": "yarn build:tsc",
+        "build:cjs": "babel ./src -d ./dist/cjs --extensions .js,.jsx,.ts,.tsx",
+        "build:esm": "babel ./src -d ./dist/esm --env-name esm --extensions .js,.jsx,.ts,.tsx",
+        "build:storybook": "build-storybook",
+        "build:tsc": "tsc --declaration --emitDeclarationOnly --outDir ./dist/ts",
+        "clean": "rimraf ./dist",
+        "postinstall": "yarn tidy",
+        "prepare": "yarn build",
+        "release": "yarn build && auto shipit",
+        "start": "run-p watch storybook",
+        "storybook": "start-storybook -p 6006 --no-manager-cache ",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "tidy": "prettier-package-json --expand-users --config .prettierrc --write package.json",
+        "watch": "run-p \"build:esm --watch\" \"build:tsc --watch\""
+    },
+    "types": "dist/ts/index.d.ts",
+    "peerDependencies": {
+        "@storybook/addons": "^6.0.0",
+        "@storybook/api": "^6.0.0",
+        "@storybook/components": "^6.0.0",
+        "@storybook/core-events": "^6.0.0",
+        "@storybook/theming": "^6.0.0",
+        "react": "^16.8.0 || ^17.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    },
+    "peerDependenciesMeta": {
+        "react": {
+            "optional": true
+        },
+        "react-dom": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.19.3",
+        "@babel/core": "^7.20.2",
+        "@babel/preset-env": "^7.20.2",
+        "@babel/preset-react": "^7.18.6",
+        "@babel/preset-typescript": "^7.18.6",
+        "@octokit/core": "^3.0.0",
+        "@spectrum-web-components/styles": "^0.20.0",
+        "@spectrum-web-components/switch": "^0.5.0",
+        "@storybook/addon-essentials": "^6.5.13",
+        "@storybook/builder-webpack5": "^6.5.13",
+        "@storybook/manager-webpack5": "^6.5.13",
+        "@storybook/react": "^6.5.13",
+        "@types/react": "^17.0.20",
+        "auto": "^10.3.0",
+        "babel-loader": "^9.1.0",
+        "css-loader": "^6.7.1",
+        "js-cookie-manager": "^1.0.2",
+        "npm-run-all": "^4.1.5",
+        "prettier": "^2.7.1",
+        "prettier-package-json": "^2.7.0",
+        "prop-types": "^15.8.1",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "require-from-string": "^2.0.2",
+        "rimraf": "^3.0.2",
+        "style-loader": "^3.3.1",
+        "typescript": "^4.7.4",
+        "web-component-essentials": "^0.0.4",
+        "webpack": "^5.74.0"
+    },
+    "keywords": [
+        "addons",
+        "brand",
+        "contexts",
+        "css",
+        "decorators",
+        "design",
+        "organize",
+        "popular",
+        "react",
+        "storybook",
+        "storybook-addon",
+        "storybook-addons",
+        "theming",
+        "tokens",
+        "variables"
+    ],
+    "engines": {
+        "node": ">=16.0.0",
+        "yarn": ">=1.16.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "storybook": {
+        "displayName": "Custom contexts",
+        "supportedFrameworks": [
+            "react",
+            "vue",
+            "angular",
+            "web-components",
+            "ember",
+            "html",
+            "svelte",
+            "preact",
+            "react-native"
+        ],
+        "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
+    }
 }

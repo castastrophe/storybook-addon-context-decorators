@@ -1,6 +1,28 @@
+# Build assets
 dist/
-node_modules/
 storybook-static/
-build-storybook.log
+node_modules/
+
+# Logging
+build-storybook.log*
+yarn-error.log*
+npm-debug.log*
+yarn-debug.log*
+*.log
+
+# Yarn Integrity file
+.yarn-integrity
+
+# TypeScript cache
+*.tsbuildinfo
+
+# IDEs
+.vscode
+
+# System files
 .DS_Store
 .env
+.env.test
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

@@ -8,13 +8,13 @@
   line-height: 1;
 }
 .storybook-button--primary {
-  color: white;
-  background-color: #1ea7fd;
+  color: var(--button-primary-color);
+  background-color: var(--button-primary-background);
 }
 .storybook-button--secondary {
-  color: #333;
-  background-color: transparent;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+  color: var(--button-secondary-color);
+  background-color: var(--button-secondary-background);
+  box-shadow: var(--button-secondary-box-shadow);
 }
 .storybook-button--small {
   font-size: 12px;
